@@ -1,4 +1,4 @@
-iNotebook - a secure web app to store notes securely in cloud
+# iNotebook - a secure web app to store notes securely in cloud
 
 # Getting Started with Create React App
 
