@@ -1,43 +1,3 @@
-/*import React, { useState } from 'react'
-
-const Login = () => {
-    const [credentials , setCredentials] = useState({email: "",password: ""})
-   
-    const handleSubmit= async(e)=>{
-        e.preventDefault();
-        fetch("http://localhost:5000/api/auth/login")
-            const response = await fetch("http://localhost:5000/api/auth/login", {
-              method: "POST", // Use GET instead of POST
-              body: JSON.stringify({ email: credentials.email,password: credentials.password }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            const json = await response.json()
-            console.log(json)
-    }
-    const onChange  = (e)=>{
-        setCredentials({...credentials, [e.target.name]: e.target.value});
-        }
-  return (
-    <div>
-      <form  onSubmit={handleSubmit}>
-        <div className="mb-3">
-            <label htmlfor="email" className="form-label">Email address</label>
-            <input type="email" className="form-control" id="email" value={credentials.email} onChange = {onChange} name="email" aria-describedby="emailHelp"/>
-            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div className="mb-3">
-            <label htmlfor="exampleInputPassword1" className="form-label">Password</label>
-            <input type="password" className="form-control" value={credentials.password} onChange = {onChange} id="exampleInputPassword1"/>
-        </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  )
-}
-
-export default Login*/
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,39 +7,40 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: credentials.email, password: credentials.password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    console.log(json);
-    if (json.success) {
-      localStorage.setItem('token', json.authtoken);
-       // Navigate to home page after successful login
-      props.showAlert("Logged-In Successfully","success")
-      navigate("/");
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: credentials.email, password: credentials.password }),
+      });
+      
+      const json = await response.json();
+      console.log("Login response:", json);
+      
+      if (json.success) {
+        // Save the auth token and redirect
+        localStorage.setItem('token', json.authtoken);
+        props.showAlert("Logged-In Successfully", "success");
+        navigate("/");
+      } else {
+        // Handle failed login (invalid credentials)
+        props.showAlert(json.error || "Invalid Credentials", "danger");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      props.showAlert("Something went wrong. Please try again.", "danger");
     }
-    else{
-      props.showAlert("Invalid Credentials","danger")
-    }
-  } catch (error) {
-    console.error("Error during login:", error);
-    props.showAlert("Something went wrong. Please try again.", "danger");
-  }
-
   };
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
-return(
-  
-  <div className="container mt-5">
-    <h1 className="card-title text-center mb-4">Welcome Back!!</h1>
+
+  return (
+    <div className="container mt-5">
+      <h1 className="card-title text-center mb-4">Welcome Back!!</h1>
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card shadow">

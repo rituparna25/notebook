@@ -22,7 +22,7 @@ const Signup = (props) => {
           props.showAlert("Account Created Successfully","success")
         }
         else{
-          props.showAlert("Invalid Credentials","danger")
+          props.showAlert(json.errors,"danger")
         }
       };
     

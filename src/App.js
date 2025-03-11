@@ -33,11 +33,11 @@ function App() {
     },
     {
       path: "/Login",
-      element: <><Navbar/><Login showAlert={showAlert}/></>
+      element: <><Navbar/><Alert alert={alert}/><Login showAlert={showAlert}/></>
     },
     {
       path: "/SignUp",
-      element: <><Navbar/><Signup showAlert={showAlert}/></>
+      element: <><Navbar/><Alert alert={alert}/><Signup showAlert={showAlert}/></>
     }
   ])
   return (

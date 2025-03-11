@@ -6,7 +6,8 @@ var fetchuser = require ('../middleware/fetchuser')
 var jwt = require('jsonwebtoken');
 const router = express.Router()
 
-const JWT_secret = 'Harryisaverygoodb$oy'
+require('dotenv').config({ path: './Backend/.env' });
+const JWT_secret = process.env.JWT_SECRET
 
 //Route1:Create a user using POST "/api/auth/createuser".No login
 router.post('/createuser',[
@@ -24,7 +25,7 @@ router.post('/createuser',[
   try {
     let user =  await User.findOne({email:req.body.email})
     if (user){
-        return res.status(400).json({success, errors: "Sorry!User with this mail-id already exists" });
+        return res.status(400).json({success, errors: "Sorry! User with this mail-id already exists" });
     }
      const salt = await bcrypt.genSalt(10);
      const secPass = await bcrypt.hash(req.body.password, salt);
@@ -64,12 +65,12 @@ try {
   let user = await User.findOne({email});
   if(!user){
     success=false
-    return res.status(400).json({success,error: "Pleae try do login with valid credentials"});
+    return res.status(400).json({success,error: "Please try to login with valid credentials"});
   }
   const passwordCompare = await bcrypt.compare(password, user.password)
   if(!passwordCompare){
     success=false
-    return res.status(400).json({success ,error: "Pleae try do login with valid credentials"});
+    return res.status(400).json({success ,error: "Please try to login with valid credentials"});
   }
   const data ={
     user:{

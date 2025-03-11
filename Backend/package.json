@@ -1,11 +1,12 @@
 {
   "name": "inotebook",
   "version": "1.0.0",
-  "description": "iNotebook - Your notebook onn cloud",
+  "description": "iNotebook - Your notebook on cloud",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "npm install"
   },
   "author": "",
   "license": "ISC",
@@ -14,10 +15,14 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
+    "google-auth-library": "^9.15.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
